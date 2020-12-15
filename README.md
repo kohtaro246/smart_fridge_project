@@ -24,8 +24,6 @@ This program has the following functions
 
 # Requirement
 
-"hoge"を動かすのに必要なライブラリなどを列挙する
-
 * python 2.7.17
 * mysqlclient 1.4.6
 * pytesseract 0.3.6
@@ -38,7 +36,6 @@ This program has the following functions
 
 # Usage
 
-DEMOの実行方法など、"hoge"の基本的な使い方を説明する
 
 ```bash
 TBA
@@ -49,8 +46,6 @@ TBA
 TBA
 
 # Author
-
-作成情報を列挙する
 
 * Kohtaro Tanaka
 * University of Tokyo Mechano-Informatics
