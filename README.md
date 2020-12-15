@@ -10,17 +10,17 @@ TBA
 
 This program has the following functions
 
-1. recognize expiration dates of products using OCR
-2. recognize 5 types of plates
-3. Store data of the following
-      picture of the product/plate
-      expiration dates
-      where it is stored
-4. Interface which allows users to do the following
-      select from list of products/plates close to expiration date
-      see picture of the products/plates close to expiration date
-      see where the product/plate close to expiration is
-5.detect where the new product/plate was placed using a camera)
+1. recognize expiration dates of products using OCR  
+2. recognize 5 types of plates  
+3. Store data of the following  
+      picture of the product/plate  
+      expiration dates  
+      where it is stored  
+4. Interface which allows users to do the following  
+      select from list of products/plates close to expiration date  
+      see picture of the products/plates close to expiration date  
+      see where the product/plate close to expiration is  
+5.detect where the new product/plate was placed using a camera)  
 
 # Requirement
 
