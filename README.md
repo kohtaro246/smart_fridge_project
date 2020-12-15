@@ -20,7 +20,7 @@ This program has the following functions
       * Select from list of products/plates close to expiration date  
       * See picture of the products/plates close to expiration date  
       * See where the product/plate close to expiration is  
-5. Detect where the new product/plate was placed using a camera)  
+5. Detect where the new product/plate was placed using a camera  
 
 # Requirement
 
