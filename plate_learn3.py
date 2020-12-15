@@ -286,7 +286,7 @@ def learn(train_set, train_class, learning_rate, iteration):
         cost_prev_prev = cost_prev
         cost_prev = cost
         cost = ce_loss(a, train_class)
-        if cost < 0.2 or test_accu > 0.8:
+        if cost < 0.2 or test_accu > 0.82:
             print("Cost after iteration {} : {}" .format(i, np.squeeze(cost)))
             print("learning rate: {}" .format(learning_rate))
             break
