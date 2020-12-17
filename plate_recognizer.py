@@ -162,4 +162,4 @@ def capture_camera(mirror=True, size=None):
     return exp_date, now
 
 
-capture_camera()
+# capture_camera()

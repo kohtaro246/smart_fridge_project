@@ -75,11 +75,11 @@ def compare(before_pic, after_pic):
         # bounding box on both input images to represent where the two
         # images differ
         (x, y, w, h) = cv2.boundingRect(c)
-       
+
         if w > 80 and h > 10:
             #print("width:" + str(w))
             #print("height:" + str(h))
-            
+
             if w + h > sum:
                 x_final = x
                 y_final = y
@@ -87,8 +87,10 @@ def compare(before_pic, after_pic):
                 h_final = h
                 sum = w + h
     if x_final != 0:
-        cv2.rectangle(imageA, (x_final, y_final), (x_final + w_final, y_final + h_final), (0, 0, 255), 2)
-        cv2.rectangle(imageB, (x_final, y_final), (x_final + w_final, y_final + h_final), (0, 0, 255), 2)
+        cv2.rectangle(imageA, (x_final, y_final), (x_final +
+                                                   w_final, y_final + h_final), (0, 0, 255), 2)
+        cv2.rectangle(imageB, (x_final, y_final), (x_final +
+                                                   w_final, y_final + h_final), (0, 0, 255), 2)
     # show the output images
     #cv2.imshow("A", grayA)
     #cv2.imshow("B", grayB)
@@ -126,10 +128,10 @@ def compare(before_pic, after_pic):
     return x_final, y_final, w_final, h_final
 
 
-before_pic = "2020_12_13_16_19_52"
-after_pic = "2020_12_13_16_20_39"
-x, y, w, h = compare(before_pic, after_pic)
-print("x:" + str(x))
-print("y:" + str(y))
-print("w:" + str(w))
-print("h:" + str(h))
+#before_pic = "2020_12_13_16_19_52"
+#after_pic = "2020_12_13_16_20_39"
+#x, y, w, h = compare(before_pic, after_pic)
+#print("x:" + str(x))
+#print("y:" + str(y))
+#print("w:" + str(w))
+#print("h:" + str(h))
