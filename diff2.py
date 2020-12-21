@@ -50,7 +50,8 @@ def compare(before_pic, after_pic):
     # load the two input images
     imageA = cv2.imread('./before_pic/' + before_pic + '.jpg')
     imageB = cv2.imread('./after_pic/' + after_pic + '.jpg')
-    # print(imageA.shape)
+    imageB_copy2 = imageB.copy()
+
     # convert the images to grayscale
     grayA = cv2.cvtColor(imageA, cv2.COLOR_BGR2GRAY)
     grayB = cv2.cvtColor(imageB, cv2.COLOR_BGR2GRAY)
@@ -125,7 +126,11 @@ def compare(before_pic, after_pic):
         h_final = y2 - y1
         x_final = x1
         y_final = y1
-    return x_final, y_final, w_final, h_final
+
+    cv2.rectangle(imageB_copy2, (x_final, y_final), (x_final +
+                                                     w_final, y_final + h_final), (0, 0, 255), 2)
+    cv2.imwrite("./location/" + after_pic + ".jpg", imageB_copy2)
+    return after_pic
 
 
 #before_pic = "2020_12_13_16_19_52"

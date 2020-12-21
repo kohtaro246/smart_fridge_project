@@ -120,7 +120,7 @@ def load_dataset():
 train_set, test_set, train_class, test_class = load_dataset()
 print("data loaded")
 # print(train_set.shape)
-# print(train_class.shape)
+print(train_class.shape)
 # print(test_set.shape)
 # print(test_class.dtype)
 train_set = np.asarray(train_set)

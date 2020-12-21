@@ -395,8 +395,8 @@ while True:
     if track_flag == 1:
         after_pic = afterpic.capture_camera()
 
-        x, y, w, h = diff2.compare(before_pic, after_pic)
-        location = str(x) + "," + str(y) + "," + str(w) + "," + str(h)
+        location = diff2.compare(before_pic, after_pic)
+
     # store_data
     if track_flag == 0:
         location = None
