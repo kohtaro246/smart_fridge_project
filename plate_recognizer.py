@@ -83,7 +83,7 @@ def recognizer(frame):
     return pred
 
 
-def capture_camera(mirror=True, size=None):
+def capture_camera(flag, mirror=True, size=None):
     """Capture video from camera"""
     # print("here")
     cap = cv2.VideoCapture(1)
@@ -155,7 +155,8 @@ def capture_camera(mirror=True, size=None):
     print(exp_date)
     now = datetime.now()
     now = now.strftime('%Y_%m_%d_%H_%M_%S')
-    cv2.imwrite("./picture/" + now + ".jpg", frame)
+    if flag == 0:
+        cv2.imwrite("./picture/" + now + ".jpg", frame)
 
     cap.release()
     cv2.destroyAllWindows()

@@ -1,58 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
 
-# About the program
-# This program has the following functions
-#
-# 1. recognize expiration dates
-# 2. recognize ? types of plates
-# 3. Store data of the following
-#       picture of the product/plate
-#       expiration dates
-#       (Where it is stored)
 # 4. Interface which allows users to do the following
 #       select from list of products/plates close to expiration date
 #       see picture of the products/plates close to expiration date
 #       (see where the product/plate close to expiration is)
-# (5.detect where the new product/plate was placed using a camera)
 
-
-# import necessary libraries
-import datetime
-import MySQLdb
-from PIL import Image
-import pytesseract
-import argparse
-import cv2
-import os
-import re
-import sys
 import Tkinter as tk
 import tkMessageBox
 import tkFont
+import datetime
 
-# import necessary functions defined in other files
 import date_recognizer
 import plate_recognizer
-import take_picture
-import store_data
-import beforepic
-import afterpic
-import diff2
 
-
-# set necessary global variables
-
-# (if Product: detection_flag == 0, if Plate: detection_flag == 1, if not detect: detection_flag == 2)
-track_flag = 0
-detection_flag = 0
-break_flag = 0
-exp_date = datetime.date(1800, 1, 1)
-picture = ""
-before_pic = ""
-after_pic = ""
-
-# declare classes and functions necessary for date input
 # start
 now = datetime.datetime.now()
 this_year = now.year
@@ -215,67 +176,8 @@ class c_button(tk.Button):
 # end
 
 
-# check if the fridge is open (door_checker.py) (OPTION)
-# start up window
-# 1. Select track or not track
-#   if track:(OPTION)
-#       track_flag = 1
-#       check if frige door is open
-#       take an initial picture
-#   if not track:
-#       track_flag = 0
-#       continue
-root = tk.Tk()
-root.title(u"Select Option")
-root.geometry("600x200")
-
-fontstyle_title = tkFont.Font(family="Lucida Grande", size=20)
-#
-# チェックボックスのチェック状況を取得する
-#
-
-
-def check(event):
-    global Val1
-    global track_flag
-
-    text = ""
-
-    if Val1.get() == True:
-        track_flag = 1
-        root.destroy()
-    else:
-        track_flag = 0
-        root.destroy()
-
-
-# ラベル
-Static1 = tk.Label(text=u'Initial Setup', font=fontstyle_title)
-Static1.place(x=220, y=10)
-
-
-#
-# チェックボックスの各項目の初期値
-#
-Val1 = tk.BooleanVar()
-
-
-Val1.set(False)
-
-
-CheckButton1 = tk.Checkbutton(
-    text=u"Track? (check if Yes)", variable=Val1)
-CheckButton1.place(x=20, y=70)
-
-
-button1 = tk.Button(root, text=u'Confirm', width=30)
-button1.bind("<Button-1>", check)
-button1.place(x=170, y=140)
-
-root.mainloop()
-
-
 counter = 0
+break_flag = 0
 
 
 def check1(event):
@@ -308,8 +210,6 @@ def quit(event):
 
 
 while True:
-
-    # Select whether to detect? or what to detect. Plate or Product. (if Product: detection_flag == 0, if Plate: detection_flag == 1, if not detect: detection_flag == 2)
     root = tk.Tk()
     root.title(u"Select Option")
     root.geometry("600x300")
@@ -348,12 +248,10 @@ while True:
         text=u"Detect expiration date", variable=Val1)
     CheckButton1.place(x=20, y=90)
 
-    CheckButton2 = tk.Checkbutton(
-        text=u"Detect plate", variable=Val2)
+    CheckButton2 = tk.Checkbutton(text=u"Detect plate", variable=Val2)
     CheckButton2.place(x=20, y=120)
 
-    CheckButton3 = tk.Checkbutton(
-        text=u"Manual", variable=Val3)
+    CheckButton3 = tk.Checkbutton(text=u"Manual", variable=Val3)
     CheckButton3.place(x=20, y=150)
 
     button1 = tk.Button(root, text=u'Confirm', width=30)
@@ -370,15 +268,11 @@ while True:
     if break_flag == 1:
         break
 
-    # take initial picture if track_flag == 0
-    if track_flag == 1:
-        before_pic = beforepic.capture_camera()
-
     # detection (date_recognizer.py, plate_recognizer.py, input_date.py) and capture
     if detection_flag == 0:
         exp_date = date_recognizer.capture_camera()
     elif detection_flag == 1:
-        exp_date, picture = plate_recognizer.capture_camera(0)
+        exp_date, picture = plate_recognizer.capture_camera(1)
     if detection_flag == 2 or exp_date == datetime.date(1900, 1, 1):
         # ルートフレームの定義
         root = tk.Tk()
@@ -387,21 +281,4 @@ while True:
         mycal.pack()
         root.mainloop()
 
-    # capture picture of the product (return )
-    if (detection_flag == 0) or (detection_flag == 2):
-        picture = take_picture.capture_camera()
-
-    # take an after picture of the fridge and track where the item was placed if track_flag == 1 (OPTION)
-    if track_flag == 1:
-        after_pic = afterpic.capture_camera()
-
-        location = diff2.compare(before_pic, after_pic)
-
-    # store_data
-    if track_flag == 0:
-        location = None
-    store_data.store_data(exp_date, picture, track_flag, location)
-
-    # check if fridge door is open? (OPTION)
-    # select end? or continue
     counter += 1
