@@ -10,9 +10,15 @@ import Tkinter as tk
 import tkMessageBox
 import tkFont
 import datetime
+from PIL import Image, ImageTk
 
 import date_recognizer
 import plate_recognizer
+import ret_data
+import scrolled_listbox as SL
+
+
+exp_date = datetime.date(1800, 1, 1)
 
 # start
 now = datetime.datetime.now()
@@ -189,14 +195,17 @@ def check1(event):
 
     text = ""
 
-    if Val1.get() == True and Val2.get() == False and Val3.get() == False:
+    if Val1.get() == True and Val2.get() == False and Val3.get() == False and Val4.get() == False:
         detection_flag = 0
         root.destroy()
-    elif Val1.get() == False and Val2.get() == True and Val3.get() == False:
+    elif Val1.get() == False and Val2.get() == True and Val3.get() == False and Val4.get() == False:
         detection_flag = 1
         root.destroy()
-    elif Val1.get() == False and Val2.get() == False and Val3.get() == True:
+    elif Val1.get() == False and Val2.get() == False and Val3.get() == True and Val4.get() == False:
         detection_flag = 2
+        root.destroy()
+    elif Val1.get() == False and Val2.get() == False and Val3.get() == False and Val4.get() == True:
+        detection_flag = 3
         root.destroy()
     else:
         text = "Error: You cannot choose more than one.\n"
@@ -209,10 +218,62 @@ def quit(event):
     root.destroy()
 
 
+class Frame(tk.Frame):
+
+    def __init__(self, master=None):
+        tk.Frame.__init__(self, master)
+        self.master.title('item list')
+        intro = tk.Label(self, font=('Helvetica', '12'),  justify=tk.LEFT, wraplength='8c',
+                         text=u"Select item from the list to show its picture and location")
+        intro.pack()
+        f = tk.Frame(self, bd=3, relief=tk.RIDGE)
+        f.pack(fill=tk.BOTH, expand=1)
+
+        self.listbox = SL.ScrolledListbox(f)
+        self.listbox.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.Y)
+        self.listbox.bind("<Double-Button-1>", self.change_image)
+        self.listbox.insert(tk.END, *Images)
+
+        f_button = tk.Frame(f)
+        f_button.pack(side=tk.LEFT, padx=5, pady=5)
+        img = Image.open(Images[0])
+        self.image = ImageTk.PhotoImage(img)
+        self.label1 = tk.Label(f, image=self.image, relief=tk.RAISED, bd=3)
+        self.label1.pack(side=tk.RIGHT, padx=5)
+
+        if Location[0] != None:
+            loc = Image.open(Location[0])
+            self.location = ImageTk.PhotoImage(loc)
+            self.label2 = tk.Label(f, image=self.location,
+                                   relief=tk.RAISED, bd=3)
+            self.label2.pack(side=tk.RIGHT, padx=5)
+        elif Location[0] == None:
+            loc = Image.open("init.jpg")
+            self.location = ImageTk.PhotoImage(loc)
+            self.label2 = tk.Label(f, image=self.location,
+                                   relief=tk.RAISED, bd=3)
+            self.label2.pack(side=tk.RIGHT, padx=5)
+        
+
+    def change_image(self, event):
+        img = Image.open(self.listbox.get(tk.ACTIVE))
+        ind = Images.index(self.listbox.get(tk.ACTIVE))
+        self.image = ImageTk.PhotoImage(img)
+        self.label1.configure(image=self.image)
+
+        if Location[ind] != None:
+            loc = Image.open(Location[ind])
+            self.location = ImageTk.PhotoImage(loc)
+            self.label2.configure(image=self.location)
+        elif Location[ind] == None:
+            loc = Image.open("init.jpg")
+            self.location = ImageTk.PhotoImage(loc)
+            self.label2.configure(image=self.location)
+
 while True:
     root = tk.Tk()
     root.title(u"Select Option")
-    root.geometry("600x300")
+    root.geometry("600x330")
 
     fontstyle_title = tkFont.Font(family="Lucida Grande", size=20)
     fontstyle_subtitle = tkFont.Font(family="Lucida Grande", size=10)
@@ -240,10 +301,12 @@ while True:
     Val1 = tk.BooleanVar()
     Val2 = tk.BooleanVar()
     Val3 = tk.BooleanVar()
+    Val4 = tk.BooleanVar()
 
     Val1.set(False)
     Val2.set(False)
     Val3.set(False)
+    Val4.set(False)
     CheckButton1 = tk.Checkbutton(
         text=u"Detect expiration date", variable=Val1)
     CheckButton1.place(x=20, y=90)
@@ -254,14 +317,17 @@ while True:
     CheckButton3 = tk.Checkbutton(text=u"Manual", variable=Val3)
     CheckButton3.place(x=20, y=150)
 
+    CheckButton4 = tk.Checkbutton(text=u"Show all", variable=Val4)
+    CheckButton4.place(x=20, y=180)
+
     button1 = tk.Button(root, text=u'Confirm', width=30)
     button1.bind("<Button-1>", check1)
-    button1.place(x=170, y=190)
+    button1.place(x=170, y=220)
 
     if counter > 0:
         button2 = tk.Button(root, text=u'Quit', width=30)
         button2.bind("<Button-1>", quit)
-        button2.place(x=170, y=240)
+        button2.place(x=170, y=270)
 
     root.mainloop()
 
@@ -280,5 +346,13 @@ while True:
         mycal = mycalendar(root)
         mycal.pack()
         root.mainloop()
+    if detection_flag == 3:
+        exp_date = None
+
+    Images, Location = ret_data.ret_data(detection_flag, exp_date)
+
+    f = Frame()
+    f.pack()
+    f.mainloop()
 
     counter += 1
