@@ -15,6 +15,7 @@ from PIL import Image, ImageTk
 import date_recognizer
 import plate_recognizer
 import ret_data
+import del_data
 import scrolled_listbox as SL
 
 
@@ -234,6 +235,14 @@ class Frame(tk.Frame):
         self.listbox.bind("<Double-Button-1>", self.change_image)
         self.listbox.insert(tk.END, *Images)
 
+        # insert buttons
+        self.button1 = e_button(f, text="Confirm")
+        self.button1.pack(side=tk.BOTTOM, padx=5, pady=5, fill=tk.Y)
+        self.button1.bind("<1>", self.select_index)
+        self.button2 = e_button(f, text="Exit")
+        self.button2.pack(side=tk.BOTTOM, padx=5, pady=5, fill=tk.Y)
+        self.button2.bind("<1>", self.close)
+
         f_button = tk.Frame(f)
         f_button.pack(side=tk.LEFT, padx=5, pady=5)
         img = Image.open(Images[0])
@@ -253,7 +262,6 @@ class Frame(tk.Frame):
             self.label2 = tk.Label(f, image=self.location,
                                    relief=tk.RAISED, bd=3)
             self.label2.pack(side=tk.RIGHT, padx=5)
-        
 
     def change_image(self, event):
         img = Image.open(self.listbox.get(tk.ACTIVE))
@@ -269,6 +277,23 @@ class Frame(tk.Frame):
             loc = Image.open("init.jpg")
             self.location = ImageTk.PhotoImage(loc)
             self.label2.configure(image=self.location)
+
+    def close(self, event):
+        root.destroy()
+
+    def select_index(self, event):
+        img = self.listbox.get(tk.ACTIVE)
+        # print(img)
+        del_data.del_data(img)
+        root.destroy()
+
+
+class e_button(tk.Button):
+    def __init__(self, master=None, cnf={}, **kw):
+        tk.Button.__init__(self, master, cnf, **kw)
+        self.configure(bg="white", font=("", 14),
+                       height=2, width=30, relief="flat")
+
 
 while True:
     root = tk.Tk()
@@ -351,8 +376,10 @@ while True:
 
     Images, Location = ret_data.ret_data(detection_flag, exp_date)
 
-    f = Frame()
-    f.pack()
-    f.mainloop()
+    root = tk.Tk()
+    root.title("item")
+    frame = Frame(root)
+    frame.pack()
+    root.mainloop()
 
     counter += 1
