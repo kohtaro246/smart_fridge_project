@@ -37,14 +37,26 @@ This program has the following functions
 
 # Usage
 
-
+Clone to directory:
 ```bash
-TBA
+git clone https://github.com/kohtaro246/smart_fridge_project.git
 ```
+Register items:
+```bash
+python final.py
+```
+Check and retrieve items:
+```bash
+python final_ret.py
+```
+# Performance
+・Plate recognition accuracy：94%
+・Plate recognition time：1 sec
+・Expiration date recognition：< 5 sec
+・Registration time（WITHOUT tracking）：10 sec/item
+・Registration time（WITH tracking）：25 sec/item
+・Check / Retrieval time：10 sec/item
 
-# Note
-
-TBA
 
 # Author
 
