@@ -50,12 +50,12 @@ Check and retrieve items:
 python final_ret.py
 ```
 # Performance
-・Plate recognition accuracy：94%
-・Plate recognition time：1 sec
-・Expiration date recognition：< 5 sec
-・Registration time（WITHOUT tracking）：10 sec/item
-・Registration time（WITH tracking）：25 sec/item
-・Check / Retrieval time：10 sec/item
+* Plate recognition accuracy：94%
+* Plate recognition time：1 sec
+* Expiration date recognition：< 5 sec
+* Registration time（WITHOUT tracking）：10 sec/item
+* Registration time（WITH tracking）：25 sec/item
+* Check / Retrieval time：10 sec/item
 
 
 # Author
