@@ -1,4 +1,4 @@
-# smart_fridge_project
+# Smart Fridge Project
 
 This is a program to manage expiration dates of items that are in a refrigerator using python.
 
@@ -49,6 +49,10 @@ Check and retrieve items:
 ```bash
 python final_ret.py
 ```
+# Hardware
+![image](https://user-images.githubusercontent.com/67863406/109389223-fd5be480-794e-11eb-9316-c93ccf6d9ffc.png)
+
+
 # Performance
 * Plate recognition accuracy：94%
 * Plate recognition time：1 sec
