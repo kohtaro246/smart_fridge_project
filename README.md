@@ -4,7 +4,8 @@ This is a program to manage expiration dates of items that are in a refrigerator
 
 # DEMO
 
-TBA
+Link to demo video: https://drive.google.com/file/d/1Yr306eEAU-251A7ezx_wUpb-QWhKtHqd/view?usp=sharing
+
 
 # Features
 
